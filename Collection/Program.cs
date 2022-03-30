@@ -16,7 +16,14 @@
 
             foreach (var entity in returnEntity(list))
             {
-                Console.WriteLine(entity.Key + " " + entity.Value);
+                Console.Write("Key = " + entity.Key + " Value = List { ");
+
+                foreach (var ent in entity.Value)
+                {
+                    Console.Write("Entity { Id = " + ent.Id + " }, ");
+                }
+                
+                Console.Write(" }\n");
             }
         }
 
@@ -26,10 +33,17 @@
 
             foreach (var ent in list)
             {
-                entity[ent.ParentId] = new List<Entity>()
+                if (entity.ContainsKey(ent.ParentId))
                 {
-                    ent
-                };
+                    entity[ent.ParentId].Add(ent);
+                }
+                else
+                {
+                    entity[ent.ParentId] = new List<Entity>()
+                    {
+                        ent
+                    };
+                }
             }
 
             return entity;
